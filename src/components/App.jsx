@@ -5,6 +5,8 @@ import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
 
+import { Wrapper, H1, H2 } from './App.styled';
+
 export class App extends React.Component {
     state = {
         contacts: [
@@ -23,7 +25,10 @@ export class App extends React.Component {
             number,
         };
 
-        if (this.state.contacts.some(item => item.name === contact.name)) {
+        if (
+            this.state.contacts.filter(item => item.name === contact.name)
+                .length
+        ) {
             return alert(`${contact.name} is already in contacts`);
         } else {
             this.setState(prevState => {
@@ -60,11 +65,11 @@ export class App extends React.Component {
         const vilibleContact = this.getVisibleContacts();
 
         return (
-            <div>
-                <h1>Phonebook</h1>
+            <Wrapper>
+                <H1>Phonebook</H1>
                 <ContactForm onSubmit={this.addContact} />
 
-                <h2>Contacts</h2>
+                <H2>Contacts</H2>
                 <Filter
                     filter={this.state.filter}
                     onChange={this.changeFilter}
@@ -73,7 +78,7 @@ export class App extends React.Component {
                     vilibleContact={vilibleContact}
                     deleteContact={this.deleteContact}
                 />
-            </div>
+            </Wrapper>
         );
     }
 }
